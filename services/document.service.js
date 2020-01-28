@@ -46,15 +46,11 @@ module.exports = {
 						fs.unlink(directory);
 					});
 			
-					writeStream.on("end", () => {
+					writeStream.on("close", () => {
 						resolve({ directory, meta: ctx.meta });
 					});
 			
-					writeStream.on("open", () => {
-						readStream.on("open", () => {
-							readStream.pipe(writeStream);
-						});
-					});
+					readStream.pipe(writeStream);
 				});
 			}
 		}
